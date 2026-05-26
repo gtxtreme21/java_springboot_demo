@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: disease-app
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+      - name: app
+        image: gcr.io/your-project/disease-app:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            secretKeyRef:
+              name: db-secrets
+              key: url
